@@ -83,7 +83,7 @@ func run() error {
 	} else {
 		options := tty.OpenOptions{
 			PortName:              port,
-			BaudRate:              921600,
+			BaudRate:              115200,
 			DataBits:              8,
 			StopBits:              1,
 			MinimumReadSize:       1,
