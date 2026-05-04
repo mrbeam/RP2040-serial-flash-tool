@@ -80,9 +80,23 @@ func run() error {
 
 		rw = conn
 	} else {
+		portComponents := strings.Split(port, ":")
+		device := portComponents[0]
+
+		var baudRate uint = 250000
+
+		if len(portComponents) > 1 {
+			baud, err := strconv.Atoi(portComponents[1])
+			if err != nil {
+				return fmt.Errorf("baud rate must be an integer")
+			}
+
+			baudRate = uint(baud)
+		}
+
 		options := tty.OpenOptions{
-			PortName:              port,
-			BaudRate:              250000,
+			PortName:              device,
+			BaudRate:              baudRate,
 			DataBits:              8,
 			StopBits:              1,
 			MinimumReadSize:       1,
@@ -91,12 +105,11 @@ func run() error {
 
 		ser, err := tty.Open(options)
 		if err != nil {
-			return fmt.Errorf("tty.Open %s: %v", port, err)
+			return fmt.Errorf("tty.Open %s: %v", device, err)		
 		}
 		defer ser.Close()
 
-		fmt.Println("Opened", port)
-
+		fmt.Println("Opened", device, "at", baudRate, "baud")
 		rw = ser
 	}
 

@@ -18,9 +18,11 @@ Then (assuming your `go` binary install location is on your `$PATH`, see you can
 run `serial-flash`:
 
 ```
-
 # rp2040_serial_bootloader
-serial-flash /dev/ttyUSB0 app.elf
+serial-flash /dev/ttyUSB0:250000 app.elf
+
+# rp2040_serial_bootloader used on the Raspberry Pi
+serial-flash /dev/ttyAMA0:250000 app.elf
 ```
 
 You can also build it without installing:
