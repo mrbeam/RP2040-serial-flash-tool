@@ -3,7 +3,6 @@ module github.com/usedbytes/serial-flash
 go 1.17
 
 require (
-	github.com/cheggaaa/pb v1.0.29
 	github.com/jacobsa/go-serial v0.0.0-20180131005756-15cf729a72d4
 )
 

@@ -12,7 +12,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cheggaaa/pb"
 	tty "github.com/jacobsa/go-serial/serial"
 
 	"github.com/usedbytes/serial-flash/program"
@@ -83,7 +82,7 @@ func run() error {
 	} else {
 		options := tty.OpenOptions{
 			PortName:              port,
-			BaudRate:              115200,
+			BaudRate:              250000,
 			DataBits:              8,
 			StopBits:              1,
 			MinimumReadSize:       1,
@@ -105,32 +104,16 @@ func run() error {
 	done := make(chan bool)
 
 	go func() {
-		var last program.ProgressReport
-		var bar *pb.ProgressBar
-
+		var lastStage string
 		for p := range prog {
-			if p.Stage != last.Stage {
-				if bar != nil {
-					bar.Finish()
+			if p.Stage != lastStage {
+				if lastStage != "" {
+					fmt.Println() // End previous stage line
 				}
-
-				fmt.Println(p.Stage + ":")
-				bar = pb.New(p.Max)
-				bar.ShowSpeed = true
-				bar.SetMaxWidth(80)
-				//bar.Prefix(p.Stage)
-				bar.Start()
+				fmt.Printf("%s... ", p.Stage)
+				lastStage = p.Stage
 			}
-
-			bar.Set(p.Progress)
-			bar.Update()
-			last = p
 		}
-
-		if bar != nil {
-			bar.Finish()
-		}
-
 		done <- true
 	}()
 
