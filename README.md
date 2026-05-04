@@ -31,3 +31,9 @@ cd serial-flash
 go get -v .
 go build .
 ```
+
+To build for RPi as target:
+
+```
+env GOOS=linux GOARCH=arm go build .
+```
