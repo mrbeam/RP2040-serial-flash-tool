@@ -39,13 +39,17 @@ You can also build it without installing:
 
 ```
 git clone https://github.com/mrbeam/RP2040-serial-flash-tool.git
-cd serial-flash
-go get -v .
-go build .
+cd RP2040-serial-flash-tool
+make
 ```
 
 To build for RPi as target:
 
 ```
-env GOOS=linux GOARCH=arm go build .
+make raspberrypi3
 ```
+
+The `raspberrypi3` target selects Linux ARMv7 and produces `serial-flash`.
+Plain `make` builds for the host platform. The Yocto recipe uses this target
+with its cross compiler and build flags. `GO`, `BUILD_FLAGS`, and `OUTPUT` can
+be supplied by the caller.
