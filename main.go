@@ -14,8 +14,8 @@ import (
 
 	tty "github.com/jacobsa/go-serial/serial"
 
-	"github.com/usedbytes/serial-flash/program"
-	"github.com/usedbytes/serial-flash/protocol"
+	"github.com/mrbeam/RP2040-serial-flash-tool/program"
+	"github.com/mrbeam/RP2040-serial-flash-tool/protocol"
 )
 
 func align(val, to uint32) uint32 {

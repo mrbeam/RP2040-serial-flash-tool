@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/usedbytes/serial-flash/protocol"
+	"github.com/mrbeam/RP2040-serial-flash-tool/protocol"
 )
 
 const (
