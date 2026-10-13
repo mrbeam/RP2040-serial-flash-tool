@@ -18,15 +18,22 @@ import (
 	"github.com/mrbeam/RP2040-serial-flash-tool/protocol"
 )
 
+// Set by the build linker; plain go build reports devel.
+var version = "devel"
+
 func align(val, to uint32) uint32 {
 	return (val + (to - 1)) & ^(to - 1)
 }
 
 func usage() error {
-	return fmt.Errorf("Usage: %s PORT FILE [BASE]", os.Args[0])
+	return fmt.Errorf("Usage: %s PORT FILE [BASE] (or --version)", os.Args[0])
 }
 
 func run() error {
+	if len(os.Args) == 2 && (os.Args[1] == "--version" || os.Args[1] == "-version") {
+		fmt.Println("serial-flash", version)
+		return nil
+	}
 	if len(os.Args) < 3 {
 		return usage()
 	}
@@ -105,7 +112,7 @@ func run() error {
 
 		ser, err := tty.Open(options)
 		if err != nil {
-			return fmt.Errorf("tty.Open %s: %v", device, err)		
+			return fmt.Errorf("tty.Open %s: %v", device, err)
 		}
 		defer ser.Close()
 
